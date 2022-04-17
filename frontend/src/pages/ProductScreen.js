@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Col, Row, Image, ListGroup, Card, Button } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 import { Rating } from '../components';
-import products from '../products';
+import axios from 'axios';
 const ProductScreen = () => {
+  const [singleProduct, setSingleProduct] = useState({});
   const { id } = useParams();
-  const product = products.find((product) => product._id === id);
+
+  const fetchSingleProduct = async () => {
+    try {
+      const { data } = await axios.get(`/api/products/${id}`);
+      setSingleProduct(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchSingleProduct();
+  }, []);
   return (
     <>
       <Link to='/' className='btn btn-outline-secondary my-3'>
@@ -13,18 +26,23 @@ const ProductScreen = () => {
       </Link>
       <Row>
         <Col md={6}>
-          <Image src={product.image} alt={product.name} fluid />
+          <Image src={singleProduct.image} alt={singleProduct.name} fluid />
         </Col>
         <Col md={3}>
           <ListGroup variant='flush'>
             <ListGroup.Item>
-              <h3>{product.name}</h3>
+              <h3>{singleProduct.name}</h3>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Rating value={product.rating} numReviews={product.numReviews} />
+              <Rating
+                value={singleProduct.rating}
+                numReviews={singleProduct.numReviews}
+              />
             </ListGroup.Item>
-            <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
-            <ListGroup.Item>Description: {product.description}</ListGroup.Item>
+            <ListGroup.Item>Price: ${singleProduct.price}</ListGroup.Item>
+            <ListGroup.Item>
+              Description: {singleProduct.description}
+            </ListGroup.Item>
           </ListGroup>
         </Col>
         <Col md={3}>
@@ -33,18 +51,16 @@ const ProductScreen = () => {
               <ListGroup.Item>
                 <Row>
                   <Col>Price:</Col>
-                  <Col>
-                    <srtong>${product.price}</srtong>
-                  </Col>
+                  <Col>${singleProduct.price}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Status:</Col>
                   <Col>
-                    <srtong>
-                      {product.countInStock > 0 ? 'In Stock' : 'Out of stock'}
-                    </srtong>
+                    {singleProduct.countInStock > 0
+                      ? 'In Stock'
+                      : 'Out of stock'}
                   </Col>
                 </Row>
               </ListGroup.Item>
@@ -52,7 +68,7 @@ const ProductScreen = () => {
                 <Button
                   className='w-100'
                   type='button'
-                  disabled={product.countInStock === 0}
+                  disabled={singleProduct.countInStock === 0}
                 >
                   Add to cart
                 </Button>
