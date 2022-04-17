@@ -1,0 +1,28 @@
+{
+  "name": "proshop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "server": "nodemon backend/server",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amitshuu/proshop.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amitshuu/proshop/issues"
+  },
+  "homepage": "https://github.com/amitshuu/proshop#readme",
+  "dependencies": {
+    "concurrently": "^7.1.0",
+    "express": "^4.17.3",
+    "nodemon": "^2.0.15"
+  }
+}
