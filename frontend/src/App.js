@@ -1,6 +1,6 @@
 import { Container } from 'react-bootstrap';
 import { Footer, Header } from './components';
-import { HomeScreen, ProductScreen } from './pages';
+import { CartScreen, HomeScreen, ProductScreen } from './pages';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 const App = () => {
   return (
@@ -23,6 +23,22 @@ const App = () => {
               element={
                 <Container>
                   <ProductScreen />
+                </Container>
+              }
+            />
+            <Route
+              path='/cart'
+              element={
+                <Container>
+                  <CartScreen />
+                </Container>
+              }
+            />
+            <Route
+              path='/cart/:id'
+              element={
+                <Container>
+                  <CartScreen />
                 </Container>
               }
             />
