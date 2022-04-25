@@ -1,7 +1,7 @@
 const errorHandlerMiddleware = (err, req, res, next) => {
   const defaultError = {
     statusCode: res.statusCode === 200 ? 500 : res.statusCode,
-    msg: err.msg || 'Something went wrong',
+    msg: err.message || 'Something went wrong!',
   };
 
   if (err.name === 'CastError' || res.statusCode === 404) {
