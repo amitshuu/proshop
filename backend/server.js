@@ -1,20 +1,26 @@
 import 'express-async-errors';
-
 import express from 'express';
 import 'dotenv/config';
+
+//DB connection
 import connectDB from './db/connect.js';
-
+//Middlewares
 import errorHandlerMiddleware from './middleware/error-handler.js';
-
-import productRoute from './routes/productRoute.js';
 import notFoundMiddleware from './middleware/not-found.js';
 
-const app = express();
+//Routes
+import productRoute from './routes/productRoute.js';
+import userRoutes from './routes/userRoutes.js';
 
-app.use('/api/products', productRoute);
+const app = express();
+app.use(express.json());
+
 app.get('/', (req, res) => {
   res.send('Api is runing ....');
 });
+
+app.use('/api/products', productRoute);
+app.use('/api/users', userRoutes);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
