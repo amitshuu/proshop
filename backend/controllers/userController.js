@@ -29,25 +29,6 @@ const authUser = async (req, res) => {
   }
 };
 
-// @desc    Get user profile
-// @route   POST /api/users/profile
-// @access  Private
-
-const getUserProfile = async (req, res) => {
-  const user = await User.findById(req.user._id);
-  if (user) {
-    res.status(200).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-    });
-  } else {
-    res.status(404);
-    throw new Error('User not found!');
-  }
-};
-
 // @desc    Register new user
 // @route   POST /api/users/
 // @access  Public
@@ -74,4 +55,50 @@ const registerUser = async (req, res) => {
   });
 };
 
-export { authUser, getUserProfile, registerUser };
+// @desc    Get user profile
+// @route   POST /api/users/profile
+// @access  Private
+
+const getUserProfile = async (req, res) => {
+  const user = await User.findById(req.user._id);
+  if (user) {
+    res.status(200).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    });
+  } else {
+    res.status(404);
+    throw new Error('User not found!');
+  }
+};
+
+// @desc    Update user
+// @route   PUT /api/users/profile
+// @access  Private
+const updateUserProfile = async (req, res) => {
+  const user = await User.findById(req.user._id);
+  const { email, password, name } = req.body;
+
+  if (user) {
+    user.email = email || user.email;
+    user.name = name || user.name;
+    if (password) {
+      user.password = password;
+    }
+    const updatedUser = await user.save();
+    res.status(200).json({
+      id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+      token: updatedUser.createJWT(),
+    });
+  } else {
+    res.status(404);
+    throw new Error('User not found!');
+  }
+};
+
+export { authUser, getUserProfile, registerUser, updateUserProfile };
