@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { AlertMessage, Loading, FormContainer } from '../components';
-import { setupUser } from '../actions/userActions';
+import { setupUser, getUserDetails } from '../actions/userActions';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -31,6 +32,7 @@ const LoginScreen = () => {
       currentUser = { name, email, password };
       dispatch(setupUser({ currentUser, endpoint: '/api/users' }));
     } else {
+      //Means log in
       currentUser = { email, password };
       dispatch(setupUser({ currentUser, endpoint: '/api/users/login' }));
     }
