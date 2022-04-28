@@ -9,7 +9,7 @@ import {
   Card,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { addToCart, removeItem } from '../actions/cartActions';
 import { AlertMessage } from '../components';
 
@@ -18,8 +18,14 @@ const CartScreen = () => {
   const dispatch = useDispatch();
   const { cartItems } = cart;
 
+  const navigate = useNavigate();
+
   const removeFromCartHandler = (id) => {
     dispatch(removeItem(id));
+  };
+
+  const submitHandler = () => {
+    navigate('/login?redirect=/shipping');
   };
   return (
     <Row>
@@ -91,6 +97,7 @@ const CartScreen = () => {
             <ListGroup.Item>
               <Button
                 type='button'
+                onClick={submitHandler}
                 className='w-100'
                 disabled={cartItems.length < 1}
               >
