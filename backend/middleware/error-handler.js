@@ -13,7 +13,6 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     defaultError.status === 400;
     defaultError.msg = 'Email is already exist';
   }
-
   res.status(defaultError.statusCode).json({ msg: defaultError.msg });
 };
 
