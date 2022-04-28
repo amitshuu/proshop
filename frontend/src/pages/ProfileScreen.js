@@ -35,7 +35,7 @@ const ProfileScreen = () => {
       }
     }, 3000);
     return () => clearTimeout(timer);
-  }, [success, dispatch]);
+  }, [success, dispatch, updateProfileError]);
 
   const submitHandler = (e) => {
     e.preventDefault();
