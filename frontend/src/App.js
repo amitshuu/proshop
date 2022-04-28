@@ -1,7 +1,14 @@
 import { Container } from 'react-bootstrap';
 import { Footer, Header } from './components';
-import { CartScreen, HomeScreen, ProductScreen, LoginScreen } from './pages';
+import {
+  CartScreen,
+  HomeScreen,
+  ProductScreen,
+  LoginScreen,
+  ProtectedRoute,
+} from './pages';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import ProfileScreen from './pages/ProfileScreen';
 const App = () => {
   return (
     <BrowserRouter>
@@ -47,6 +54,16 @@ const App = () => {
               element={
                 <Container>
                   <LoginScreen />
+                </Container>
+              }
+            />
+            <Route
+              path='/profile'
+              element={
+                <Container>
+                  <ProtectedRoute>
+                    <ProfileScreen />
+                  </ProtectedRoute>
                 </Container>
               }
             />
