@@ -9,6 +9,11 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     defaultError.msg = 'Product not found!';
   }
 
+  if (err.code === 11000) {
+    defaultError.status === 400;
+    defaultError.msg = 'Email is already exist';
+  }
+
   res.status(defaultError.statusCode).json({ msg: defaultError.msg });
 };
 
