@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { AlertMessage, Loading, FormContainer } from '../components';
-import { setupUser, getUserDetails } from '../actions/userActions';
-import { useNavigate } from 'react-router-dom';
+import { setupUser } from '../actions/userActions';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
 const LoginScreen = () => {
@@ -13,16 +13,19 @@ const LoginScreen = () => {
   const [name, setName] = useState('');
 
   const dispatch = useDispatch();
+  const location = useLocation();
   const navigate = useNavigate();
 
   const userLogin = useSelector((state) => state.userLogin);
   const { isLoading, error, userInfo } = userLogin;
 
+  const redirect = location.search ? location.search.split('=')[1] : '/';
+
   useEffect(() => {
     if (userInfo) {
-      navigate('/');
+      navigate(redirect);
     }
-  }, [userInfo, navigate]);
+  }, [userInfo, navigate, redirect]);
 
   const submitHandler = (e) => {
     e.preventDefault();
