@@ -5,6 +5,7 @@ import Rating from './Rating';
 import Loading from './Loading';
 import AlertMessage from './AlertMessage';
 import FormContainer from './FormContainer';
+import CheckoutSteps from './CheckoutSteps';
 
 export {
   Header,
@@ -13,5 +14,6 @@ export {
   Rating,
   Loading,
   AlertMessage,
+  CheckoutSteps,
   FormContainer,
 };
